@@ -51,7 +51,7 @@
             <input type="email" class="form-control" name="kota_asal"/>
         </div>
         <div class="form-group mb-0">
-            <label class="form-label">Thn Lahir<span class="form-required">*</span></label>
+            <label class="form-label">Tahun Lahir<span class="form-required">*</span></label>
             <input type="text" class="form-control" name="thn_lahir" />
         </div>
 </form>
@@ -63,10 +63,12 @@
 @endsection
 
 @section('js')
-{{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> --}}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script>
-    
+    var save_method;
+
     var btnModalFunc = (type) => {
+        save_method = type;
         
         if (type == 1) {
             $('#form-modal')[0].reset();
