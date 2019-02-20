@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Supplier;
 use Illuminate\Http\Request;
+use App\Model\Regency;
 
 class SupplierController extends Controller
 {
@@ -14,7 +15,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard.supplier');
     }
 
     /**
@@ -81,5 +82,13 @@ class SupplierController extends Controller
     public function destroy(Supplier $supplier)
     {
         //
+    }
+
+    public function kab_kota_list_by_keyword(Supplier $supplier, Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $kota_kab = Regency::where('name', 'like', "%{$keyword}%")->get();
+
+        return response()->json($kota_kab);
     }
 }
