@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "gentelella": "^1.4.0",
+        "moment": "^2.24.0",
         "sweetalert2": "^7.4.1"
     }
 }

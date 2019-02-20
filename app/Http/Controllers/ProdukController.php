@@ -4,9 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Produk;
 use Illuminate\Http\Request;
+use Validator;
+use Auth;
 
 class ProdukController extends Controller
 {
+
+    private function _validator()
+    {
+        return array(
+            'nama'=> 'required',
+            'supplier_id' => 'required',
+            'harga' => 'required'
+        );
+    }
+
     /**
      * Display a listing of the resource.
      *
