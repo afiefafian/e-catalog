@@ -38,7 +38,7 @@
 {{-- tabel input data --}}
 @component('layouts.admin.components.modal')
 @slot('content')
-<form id="form-tambah" data-parsley-validate action="">
+<form id="form-tambah" data-parsley-validate action="" enctype="multipart/form-data">
     {{ csrf_field() }} {{ method_field('POST') }}
     <div class="form-horizontal">
         <input id="id" name="id" type='hidden'>
@@ -84,10 +84,7 @@
 
 @endsection
 
-
 @push('js')
-
-{{-- <script type="text/javascript"  src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script> --}}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script src="{{ url('plugin/bootstrap-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js') }}"></script>

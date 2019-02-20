@@ -37,7 +37,7 @@
 {{-- tabel input data --}}
 @component('layouts.admin.components.modal')
 @slot('content')
-<form id="form-tambah" data-parsley-validate action="">
+<form id="form-tambah" data-parsley-validate enctype="multipart/form-data" method="POST">
     {{ csrf_field() }} {{ method_field('POST') }}
     <div class="form-horizontal">
         <input id="id" name="id" type='hidden'>
@@ -106,12 +106,11 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script src="{{ url('plugin/bootstrap-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js') }}"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.18/r-2.2.2/datatables.min.js"></script>
+<script src="https://cdn.datatables.net/v/bs/dt-1.10.18/r-2.2.2/datatables.min.js" type="text/javascript" ></script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
 <script>
     var table, save_method;
     $(function(){
-        
-        
         table = $('#tabel-data').DataTable({
             "processing" : true,
             "responsive": true,
@@ -134,38 +133,31 @@
             url = "{{ url('admin/produk')}}/"+id;
         }
         
-        $.ajax({
+        var options = { 
             url : url,
-            type : "POST",
-            data : $('#form-tambah').serialize(),
-            dataType: 'JSON',
-            success : function(data){
-                if((data.message)){
+            success: function(response, textStatus, xhr, form) {
+                if(response.message){
                     $('body').css('padding-right','0');
                     $('#modals-data').modal('hide');
                     swal('Good job!','Berhasil Menyimpan Data','success');
                     
                     table.ajax.reload();
                 } else {
-                    
                     $('#btn-simpan-act').html('Simpan').prop('disabled', false);
-                    
                     clearErrorInput();
-                    
-                    $.each( data, function( key, value ) {
+                    $.each(response, function( key, value ) {
                         $('[name="'+key+'"]').parent().parent().addClass('has-error'); 
                         $('[name="'+key+'"]').next().text(value); 
                     });
-                    
                 }
             },
-            error: function (xhr, ajaxOptions, thrownError) {
-                $('#btn-simpan-act').html('Simpan').prop('disabled', false);
-                
-                swal('Oops...','Terdapat gangguan server!','error');
+            error: function(xhr, textStatus, errorThrown) {
             }
-            
-        });
+        
+        };
+        
+        $('#form-tambah').ajaxForm(options).submit();
+        
     });
     
     var clearErrorInput = function() {
@@ -180,6 +172,7 @@
         $('.form-group').removeClass('has-error');
         $('.help-block').empty();
         $('.modal-title').text('Tambah Data');
+        $('#gambar-tag').attr('src', '');
         $('#btn-simpan-act').html('Simpan').prop('disabled', false);
         $('#modals-data').modal('show');
     }
@@ -192,6 +185,7 @@
         $('.form-group').removeClass('has-error'); 
         $('.help-block').empty();
         $('.modal-title').text('Edit Data');
+        $('#gambar-tag').attr('src', '');
         $('#btn-simpan-act').html('Simpan').prop('disabled', false);
         $.ajax({
             url : "produk/"+id+"/edit",
@@ -204,15 +198,15 @@
                 $('#nama').val(data.nama);
                 $('#supplier_id').val(data.supplier_id);
                 $('#harga').val(data.harga);
-
+                
                 if (data.active) {
                     $('#active').prop('checked', true);
                 } else {
                     $('#active').prop('checked', false);
                 }
-
-                if (data.url_gambar != null || data.url_gambar != '') {
-                    var src = "/public/images/barang/"+data.url_gambar;
+                
+                if (data.url_gambar != null && data.url_gambar != '') {
+                    var src = "{{ asset('public/images/produk/') }}/"+data.url_gambar;
                     $('#gambar-tag').attr('src', src);
                 }
                 
@@ -223,7 +217,7 @@
         });
     }
     
-    var delete_supplier = function(id) {
+    var delete_produk = function(id) {
         
         swal({
             title: 'Are you sure?', 
@@ -246,8 +240,6 @@
                     {
                         table.ajax.reload();   
                         swal('Good job!','Berhasil Mengapus Data','success');
-                        
-                        
                     },
                     error: function (jqXHR, textStatus, errorThrown)
                     {

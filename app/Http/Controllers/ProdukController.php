@@ -43,14 +43,20 @@ class ProdukController extends Controller
 
         $data = array();
         foreach($produk as $list){
+            if ($list->active == 1) {
+                $status = '<span class="label label-success"><i class="fa fa-check"></i> Aktif</span>';
+            } else {
+                $status = '<span class="label label-danger"><i class="fa fa-times"></i> Tidak Aktif</span>';
+            }
+
             $row = array();
             $row[] = $list->id;
             $row[] = $list->nama_supplier;
-            $row[] = $list->harga;
-            $row[] = $list->active;
+            $row[] = 'Rp ' . number_format($list->harga);
+            $row[] = $status;
             $row[] = "<div align='center'>
             <button id='btn-ubah' type='button' onclick='edit(" .$list->id. ")' class='btn btn-warning btn-xs'><i class='fa fa-edit'></i></button>
-            <button id='btn-ubah' type='button' onclick='delete(" .$list->id. ")' class='btn btn-danger btn-xs'><i class='fa fa-trash-o'></i></button>
+            <button id='btn-ubah' type='button' onclick='delete_produk(" .$list->id. ")' class='btn btn-danger btn-xs'><i class='fa fa-trash-o'></i></button>
             </div>";
             
             $data[] = $row;
@@ -88,7 +94,7 @@ class ProdukController extends Controller
             if ($file != '') {
                 $Ext = $file->getClientOriginalExtension();
                 $gambar = "brg_".date('YmdHis').".$Ext";
-                $request->file('gambar')->move(public_path() . '/public/images/barang', $gambar);
+                $request->file('gambar')->move(public_path() . '/public/images/produk', $gambar);
             } 
 
             $produk = new Produk();
@@ -154,11 +160,11 @@ class ProdukController extends Controller
             $file = $request->file('gambar'); 
             if ($file != '') {
                 $Ext = $file->getClientOriginalExtension();
-                $gambar = "brg_".date('YmdHis').".$Ext";
-                $request->file('gambar')->move(public_path() . '/public/images/barang', $gambar);
+                $gambar = "prd_".date('YmdHis').".$Ext";
+                $request->file('gambar')->move(public_path() . '/public/images/produk', $gambar);
 
-                if ( $produk->url_gambar != null) {
-                    Storage::delete(public_path() . '/public/images/barang' . $produk->url_gambar);
+                if ($produk->url_gambar != null) {
+                    Storage::delete(public_path() . '/public/images/produk/' . $produk->url_gambar);
                 }
             } 
 
