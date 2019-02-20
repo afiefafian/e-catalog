@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Validator;
 use DataTables;
 use Auth;
-use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
 {
@@ -164,7 +163,7 @@ class ProdukController extends Controller
                 $request->file('gambar')->move(public_path() . '/public/images/produk', $gambar);
 
                 if ($produk->url_gambar != null) {
-                    Storage::delete(public_path() . '/public/images/produk/' . $produk->url_gambar);
+                    unlink('./public/images/produk/' . $produk->url_gambar);
                 }
             } 
 
