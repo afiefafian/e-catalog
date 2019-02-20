@@ -10,11 +10,6 @@
     
     <div class="my-3 my-md-5" id="app">
         <div class="container">
-            <div class="page-header">
-                <h1 class="page-title">
-                    Dashboard
-                </h1>
-            </div>
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">

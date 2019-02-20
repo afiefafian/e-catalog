@@ -2,7 +2,7 @@
 <div class="header py-4">
   <div class="container">
     <div class="d-flex">
-      <a class="header-brand" href="{{ url('home') }}">
+      <a class="header-brand" href="{{ url('admin/home') }}#">
         <img src="{{ asset('/svg/catalogue.svg') }}" class="header-brand-img" alt="tabler logo">
         E-Catalog
       </a>

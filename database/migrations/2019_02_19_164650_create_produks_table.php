@@ -15,7 +15,14 @@ class CreateProduksTable extends Migration
     {
         Schema::create('produks', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('supplier_id')->references('id')->on('suppliers');
+            $table->integer('harga');
+            $table->integer('url_gambar')->nullable();
+            $table->boolean('active')->default(false);
+            $table->integer('posted_by_id')->nullable();
+            $table->string('posted_by_name')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

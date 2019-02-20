@@ -30,5 +30,6 @@ Route::prefix('admin')->group(function () {
     Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
     Route::get('home', 'HomeController@index');
-    
+    Route::resource('supplier', 'SupplierController');
+    Route::resource('produk', 'ProdukController');
 });

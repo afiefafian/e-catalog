@@ -4,13 +4,13 @@
       <div class="col-lg order-lg-first">
         <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
           <li class="nav-item">
-            <a href="{{ url('home') }}" class="nav-link"><i class="fe fe-home"></i> Home</a>
+            <a href="{{ url('admin/home') }}" class="nav-link"><i class="fe fe-home"></i> Home</a>
           </li>
           <li class="nav-item dropdown">
-            <a href="{{ url('supplier') }}" class="nav-link"><i class="fe fe-box"></i> Supplier</a>
+            <a href="{{ url('admin/supplier') }}" class="nav-link"><i class="fe fe-box"></i> Supplier</a>
           </li>
           <li class="nav-item dropdown">
-            <a href="{{ url('produk') }}" class="nav-link"><i class="fe fe-check-square"></i> Produk</a>
+            <a href="{{ url('admin/produk') }}" class="nav-link"><i class="fe fe-check-square"></i> Produk</a>
           </li>
         </ul>
       </div>
