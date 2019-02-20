@@ -6,6 +6,7 @@ use App\Supplier;
 use Illuminate\Http\Request;
 use App\Model\Regency;
 use Validator;
+use DataTables;
 use Auth;
 
 class SupplierController extends Controller
@@ -28,6 +29,36 @@ class SupplierController extends Controller
     public function index()
     {
         return view('admin.supplier');
+    }
+
+    public function listData()
+    {
+        $supplier = Supplier::select('suppliers.*', 'indoregion_regencies.name AS nama_kota')
+            ->join('indoregion_regencies', 'suppliers.kota_asal' , '=', 'indoregion_regencies.id')
+            ->orderBy('suppliers.id', 'desc')
+            ->get();
+            // return response()->json($supplier);
+        $data = array();
+        $thn = date('Y');
+        foreach($supplier as $list){
+            
+            $umur = $thn - $list->thn_lahir;
+
+            $row = array();
+            $row[] = $list->id;
+            $row[] = $list->nama;
+            $row[] = $list->email;
+            $row[] = $list->nama_kota;
+            $row[] = $umur;
+            $row[] = "<div align='center'>
+            <button id='btn-ubah' type='button' onclick='edit(" .$list->id. ")' class='btn btn-warning btn-xs'><i class='fa fa-edit'></i></button>
+            <button id='btn-ubah' type='button' onclick='delete_supplier(" .$list->id. ")' class='btn btn-danger btn-xs'><i class='fa fa-trash-o'></i></button>
+            </div>";
+            
+            $data[] = $row;
+        }
+        
+        return DataTables::of($data)->escapeColumns([])->make(true);
     }
 
     /**
@@ -85,7 +116,7 @@ class SupplierController extends Controller
      * @param  \App\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function edit(Supplier $supplier)
+    public function edit($id)
     {
         $supplier = Supplier::find($id);
         return response()->json($supplier);
@@ -98,7 +129,7 @@ class SupplierController extends Controller
      * @param  \App\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Supplier $supplier, $id)
+    public function update(Request $request, $id)
     {
         $supplier = Supplier::find($request->id);
         
@@ -122,7 +153,7 @@ class SupplierController extends Controller
      * @param  \App\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Supplier $supplier)
+    public function destroy($id)
     {
         $supplier = Supplier::find($id);
         

@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Produk;
+use App\Supplier;
 use Illuminate\Http\Request;
 use Validator;
+use DataTables;
 use Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
 {
@@ -26,7 +29,34 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        return view('admin.produk');
+        $data['suppliers'] = Supplier::all();
+
+        return view('admin.produk', $data);
+    }
+
+    public function listData()
+    {
+        $produk = Produk::select('produks.*', 'suppliers.nama AS nama_supplier')
+            ->join('suppliers', 'produks.supplier_id' , '=', 'suppliers.id')
+            ->orderBy('produks.id', 'desc')
+            ->get();
+
+        $data = array();
+        foreach($produk as $list){
+            $row = array();
+            $row[] = $list->id;
+            $row[] = $list->nama_supplier;
+            $row[] = $list->harga;
+            $row[] = $list->active;
+            $row[] = "<div align='center'>
+            <button id='btn-ubah' type='button' onclick='edit(" .$list->id. ")' class='btn btn-warning btn-xs'><i class='fa fa-edit'></i></button>
+            <button id='btn-ubah' type='button' onclick='delete(" .$list->id. ")' class='btn btn-danger btn-xs'><i class='fa fa-trash-o'></i></button>
+            </div>";
+            
+            $data[] = $row;
+        }
+        
+        return DataTables::of($data)->escapeColumns([])->make(true);
     }
 
     /**
@@ -47,7 +77,39 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), $this->_validator());
+         
+           
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        } else {
+
+            $file = $request->file('gambar'); 
+            if ($file != '') {
+                $Ext = $file->getClientOriginalExtension();
+                $gambar = "brg_".date('YmdHis').".$Ext";
+                $request->file('gambar')->move(public_path() . '/public/images/barang', $gambar);
+            } 
+
+            $produk = new Produk();
+            $produk->nama = $request->nama;
+            $produk->supplier_id= $request->supplier_id;
+            $produk->harga = $request->harga;
+            $produk->posted_by_id = Auth::user()->id;
+            $produk->posted_by_name = Auth::user()->name;
+
+            if ($request->active == 'on') {
+                $produk->active = true;
+            }
+
+            if ($file != '' && $gambar) {
+                $produk->url_gambar = $gambar;
+            }
+
+            $produk->save();
+
+            return response()->json(['message'=>'success']);  
+        }
     }
 
     /**
@@ -67,11 +129,11 @@ class ProdukController extends Controller
      * @param  \App\Produk  $produk
      * @return \Illuminate\Http\Response
      */
-    public function edit(Produk $produk)
+    public function edit($id)
     {
-        //
+        $produk = Produk::find($id);
+        return response()->json($produk);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -79,9 +141,44 @@ class ProdukController extends Controller
      * @param  \App\Produk  $produk
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Produk $produk)
+    public function update(Request $request, $id)
     {
-        //
+        $produk = Produk::find($request->id);
+        
+        $validator = Validator::make($request->all(), $this->_validator() );
+
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        } else {
+
+            $file = $request->file('gambar'); 
+            if ($file != '') {
+                $Ext = $file->getClientOriginalExtension();
+                $gambar = "brg_".date('YmdHis').".$Ext";
+                $request->file('gambar')->move(public_path() . '/public/images/barang', $gambar);
+
+                if ( $produk->url_gambar != null) {
+                    Storage::delete(public_path() . '/public/images/barang' . $produk->url_gambar);
+                }
+            } 
+
+            $produk->nama = $request->nama;
+            $produk->supplier_id= $request->supplier_id;
+            $produk->harga = $request->harga;
+
+            if ($request->active == 'on') {
+                $produk->active = true;
+            } else {
+                $produk->active = false;
+            }
+
+            if ($file != '' && $gambar) {
+                $produk->url_gambar = $gambar;
+            }
+            
+            $produk->update();
+            return response()->json(['message'=>'success']);
+        }
     }
 
     /**
@@ -90,8 +187,11 @@ class ProdukController extends Controller
      * @param  \App\Produk  $produk
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Produk $produk)
+    public function destroy($id)
     {
-        //
+        $produk = Produk::find($id);
+
+        $produk->delete();
+        return response()->json(['message' => 'success']);
     }
 }

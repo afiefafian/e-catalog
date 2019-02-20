@@ -15,6 +15,7 @@ class CreateProduksTable extends Migration
     {
         Schema::create('produks', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nama');
             $table->integer('supplier_id')->references('id')->on('suppliers');
             $table->integer('harga');
             $table->string('url_gambar')->nullable();

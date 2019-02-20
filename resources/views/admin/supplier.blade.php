@@ -2,7 +2,8 @@
 
 @section('css')
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-<link href="{{ asset('plugin\bootstrap-datetimepicker-master\build\css\bootstrap-datetimepicker.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('plugin/bootstrap-datetimepicker-master/build/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.18/r-2.2.2/datatables.min.css"/>
 @endsection
 
 @section('content')
@@ -18,7 +19,7 @@
         <div class="clearfix"></div>
     </div>
     <div class="x_content">
-        <table id="tabel-data" class="tabletable-striped table-hover no-footer" role="grid" aria-describedby="tabel-data_info" style='width:100%;'>
+        <table id="tabel-data" class="table table-striped table-hover no-footer" role="grid" aria-describedby="tabel-data_info" style='width:100%;'>
             <thead>
                 <tr>
                     <th>ID</th>
@@ -63,7 +64,6 @@
             <div class="col-md-8 col-sm-8 col-xs-12">
                 <select id="kota_select" name="kota_asal" class="required form-control input-xs" style="width: 100% !important;">
                 </select>
-                {{-- <input type="hidden" name="kota_asal"> --}}
                 <span class="help-block"></span>
             </div>
         </div>
@@ -91,7 +91,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script src="{{ url('plugin/bootstrap-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js') }}"></script>
-
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.18/r-2.2.2/datatables.min.js"></script>
 <script>
     var table, save_method;
     $(function(){
@@ -126,12 +126,14 @@
             format: 'YYYY'
         });
         
-        table = $('.table').DataTable({
+        table = $('#tabel-data').DataTable({
             "processing" : true,
+            "responsive": true,
             "ajax" : {
-                "url" : "{{ url('supplierdata') }}",
+                "url" : "{{ url('admin/supplier_data') }}",
                 "type" : "GET"
-            }
+            },
+            "order": [[ 0, "desc" ]]
         });
     });
     
@@ -143,7 +145,7 @@
         if(save_method == "add") {
             url = "{{ url('admin/supplier' )}}";
         } else {
-            url = "{{ url('admin/supplier/')}}"+id;
+            url = "{{ url('admin/supplier')}}/"+id;
         }
         
         $.ajax({
@@ -157,7 +159,7 @@
                     $('#modals-data').modal('hide');
                     swal('Good job!','Berhasil Menyimpan Data','success');
                     
-                    // table.ajax.reload();
+                    table.ajax.reload();
                 } else {
                     
                     $('#btn-simpan-act').html('Simpan').prop('disabled', false);
@@ -192,6 +194,7 @@
         $('.form-group').removeClass('has-error');
         $('.help-block').empty();
         $('.modal-title').text('Tambah Data');
+        $('#email').prop('readonly', false);
         $('#btn-simpan-act').html('Simpan').prop('disabled', false);
         $('#modals-data').modal('show');
     }
@@ -212,13 +215,11 @@
             success : function(data){
                 $('#modals-data').modal('show');
                 
-                $('#id').val(data.id_supplier);
-                $('#kode').val(data.kode_supplier);
-                $('#nama').val(data.nama_supplier);
-                $('#alamat').val(data.alamat_supplier);
-                $('#no_telp1').val(data.no_telp1_supplier);
-                $('#no_telp2').val(data.no_telp1_supplier);
-                $('#email_supplier').val(data.email_supplier);
+                $('#id').val(data.id);
+                $('#nama').val(data.nama);
+                $('#email').val(data.email).prop('readonly', true);
+                // $('#no_telp1').val(data.no_telp1_supplier);
+                $('#thn_lahir').val(data.thn_lahir);
             },
             error : function(){
                 swal('Oops...','Gagal Menampilkan Data!','error');
@@ -249,8 +250,6 @@
                     {
                         table.ajax.reload();   
                         swal('Good job!','Berhasil Mengapus Data','success');
-                        
-                        
                     },
                     error: function (jqXHR, textStatus, errorThrown)
                     {
