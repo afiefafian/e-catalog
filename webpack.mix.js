@@ -10,10 +10,10 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-
-mix.js([
-   'resources/assets/js/app.js',
+ 
+ mix.js([
+   'resources/js/app.js',
    'node_modules/gentelella/src/js/custom',
    'node_modules/gentelella/src/js/helpers/smartresize'
    ], 'public/js')
-  .sass('resources/assets/sass/app.scss', 'public/css');
+ .sass('resources/sass/app.scss', 'public/css');
