@@ -17,7 +17,7 @@ class CreateProduksTable extends Migration
             $table->increments('id');
             $table->integer('supplier_id')->references('id')->on('suppliers');
             $table->integer('harga');
-            $table->integer('url_gambar')->nullable();
+            $table->string('url_gambar')->nullable();
             $table->boolean('active')->default(false);
             $table->integer('posted_by_id')->nullable();
             $table->string('posted_by_name')->nullable();

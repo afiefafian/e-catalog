@@ -18,7 +18,7 @@ class CreateSuppliersTable extends Migration
             $table->string('nama');
             $table->string('email');
             $table->integer('kota_asal');
-            $table->date('tgl_lahir');
+            $table->integer('thn_lahir');
             $table->integer('posted_by_id')->nullable();
             $table->string('posted_by_name')->nullable();
             $table->timestamps();
