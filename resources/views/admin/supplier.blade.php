@@ -29,13 +29,14 @@
     </div>
 </div>
 
+@component('layouts.admin.components.modal')
+{{-- @include('layouts.admin.partial._notif') --}}
+@endcomponent
+
 @endsection
 
 
 @push('js')
-
-@
-
 <script type="text/javascript"  src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script>
     var table, save_method;

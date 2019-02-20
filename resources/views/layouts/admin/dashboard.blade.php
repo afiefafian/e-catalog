@@ -25,8 +25,7 @@
       
       @include('layouts.admin.partial._sidebar')
       @component('layouts.admin.partial._topnav')
-          {{-- @component('layouts.admin.partial._notif')
-          @endcomponent --}}
+          {{-- @include('layouts.admin.partial._notif') --}}
       @endcomponent
 
       <!-- page content -->
