@@ -3,13 +3,13 @@
   <div class="container">
     <div class="d-flex">
       <a class="header-brand" href="{{ url('home') }}">
+        <img src="{{ asset('/svg/catalogue.svg') }}" class="header-brand-img" alt="tabler logo">
         E-Catalog
-        {{-- <img src="./template/tabler-ui/demo/brand/tabler.svg" class="header-brand-img" alt="tabler logo"> --}}
       </a>
       <div class="d-flex order-lg-2 ml-auto">
         <div class="dropdown">
           <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
-            <span class="avatar" style="background-image: url(./demo/faces/female/25.jpg)"></span>
+            <span class="avatar" style="background-image: url({{ asset('svg/user.svg') }})"></span>
             <span class="ml-2 d-none d-lg-block">
               <span class="text-default">{{ Auth::user()->name }}</span>
             </span>

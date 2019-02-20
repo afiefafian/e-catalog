@@ -8,8 +8,8 @@
     <div class="row">
       <div class="col col-login mx-auto" id="app">
         <div class="text-center mb-6">
-          {{-- E-Catalog --}}
-          <img src="./template/tabler-ui/demo/brand/tabler.svg" class="h-6" alt="">
+          <img src="{{ asset('/svg/catalogue.svg') }}" class="h-7" alt="">
+          <h3 style="margin: 5px 0 0 0;">E-Catalog</h3>
         </div>
         <form class="card" action="{{ route('login') }}" method="post">
           @csrf

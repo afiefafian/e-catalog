@@ -12,8 +12,8 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
-  <link rel="icon" href="./template/tabler-ui/favicon.ico" type="image/x-icon"/>
-  <link rel="shortcut icon" type="image/x-icon" href="./template/tabler-ui/favicon.ico" />
+  <link rel="icon" href="{{ asset('/svg/catalogue.svg') }}" type="image/x-icon"/>
+  <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/svg/catalogue.svg') }}" />
   <!-- Generated: 2018-04-16 09:29:05 +0200 -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
   
@@ -23,11 +23,11 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
   
   <!-- Dashboard Core -->
-  <link href="./template/tabler-ui/assets/css/dashboard.css" rel="stylesheet" />
+  <link href="{{ asset('template/tabler-ui/assets/css/dashboard.css') }}" rel="stylesheet" />
   <!-- c3.js Charts Plugin -->
-  <link href="./template/tabler-ui/assets/plugins/charts-c3/plugin.css" rel="stylesheet" />
+  <link href="{{ asset('template/tabler-ui/assets/plugins/charts-c3/plugin.css') }}" rel="stylesheet" />
   <!-- Google Maps Plugin -->
-  <link href="./template/tabler-ui/assets/plugins/maps-google/plugin.css" rel="stylesheet" />
+  <link href="{{ asset('template/tabler-ui/assets/plugins/maps-google/plugin.css') }}" rel="stylesheet" />
   
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
@@ -44,14 +44,14 @@
 </html>
 
 <script src="{{ asset('js/app.js') }}"></script>
-<script src="/template/tabler-ui/assets/js/require.min.js"></script>
+<script src="{{ asset('template/tabler-ui/assets/js/require.min.js') }}"></script>
 <script>
   requirejs.config({
-    baseUrl: './template/tabler-ui/'
+    baseUrl: '{{ asset('template/tabler-ui/') }}'
   });
 </script>
 <!-- Dashboard Core -->
-<script src="./template/tabler-ui/assets/js/dashboard.js"></script>
+<script src="{{ asset('template/tabler-ui/assets/js/dashboard.js') }}"></script>
 
 @yield('js')
 <!-- c3.js Charts Plugin -->
