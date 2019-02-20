@@ -14,7 +14,7 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        return view('dashboard.produk');
+        return view('admin.produk');
     }
 
     /**

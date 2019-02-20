@@ -56,7 +56,6 @@
   <script src="{{ asset('js/app.js') }}"></script>
   
   @stack('js')
-  {{-- <script src="http://tatayanna.com/starkey/assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script> --}}
 </body>
 
 </html>

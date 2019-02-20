@@ -12,41 +12,24 @@
 
       <!-- Styles -->
       <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-      <style>
-        input[type=text], 
-        input[type=email], 
-        input[type=password], 
-        input[type=text]:focus, 
-        input[type=email]:focus,
-        input[type=password]:focus {
-          -webkit-box-shadow: none !important;
-          -moz-box-shadow: none !important;
-          box-shadow: none !important;
-        }
-
-        #email, #password {
-          height: 42px !important;
-          margin-bottom: 0;
-        }
-
-        .login {
-          background-color: #ffffff;
-        }
-      </style>
   </head>
 
   <body class="login">
     <div>
+      <a class="hiddenanchor" id="signup"></a>
+      <a class="hiddenanchor" id="signin"></a>
+
       <div class="login_wrapper">
         <div class="animate form login_form">
-          <section class="login_header text-center" style="margin-top: 15vh;">
+          <section class="login_header">
             <img src="{{ asset('svg/catalogue.svg') }}" alt="logo" style="height:60px;">
-            <span style="font-weight: 600; font-size: 25px; vertical-align: middle; margin-left: 10px; color: #333333;">E-CATALOG</span>
+            <span style="font-weight: 400; font-size: 27px;">E-CATALOG</span>
           </section>
           <section class="login_content">
             <form class="form-horizontal" method="POST" action="{{ route('login') }}">
               {{ csrf_field() }}
-              <div class="form-group">
+              <h1>Login</h1>
+              <div>
                  <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Email" required autofocus>
                   @if ($errors->has('email'))
                       <span class="help-block">
@@ -54,7 +37,7 @@
                       </span>
                   @endif
               </div>
-              <div class="form-group" style="margin-top: 20px;">
+              <div>
                 <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
                 @if ($errors->has('password'))
                   <span class="help-block">
@@ -72,7 +55,7 @@
               <div class="clearfix"></div>
               <div class="separator"></div>
               <div>
-                <button type="submit" class="btn btn-dark btn-block" style="padding: 11px;">LOG IN</botton>
+                <button type="submit" class="btn btn-default btn-success btn-block">Log in</botton>
               </div>
 
             </form>
