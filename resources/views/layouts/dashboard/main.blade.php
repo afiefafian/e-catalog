@@ -43,16 +43,16 @@
 </body>
 </html>
 
+
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('template/tabler-ui/assets/js/require.min.js') }}"></script>
 <script>
   requirejs.config({
-    baseUrl: '{{ asset('template/tabler-ui/') }}'
+    baseUrl: "{{ asset('template/tabler-ui/') }}"
   });
 </script>
 <!-- Dashboard Core -->
 <script src="{{ asset('template/tabler-ui/assets/js/dashboard.js') }}"></script>
-
 @yield('js')
 <!-- c3.js Charts Plugin -->
 {{-- <script src="./template/tabler-ui/assets/plugins/charts-c3/plugin.js"></script>

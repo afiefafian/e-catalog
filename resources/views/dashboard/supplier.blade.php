@@ -1,5 +1,8 @@
 @extends('layouts.dashboard.main')
 
+@section('css')
+@endsection
+
 @section('content')
 
 <div class="page-main">
@@ -40,19 +43,22 @@
 <form action="#" id="form-modal">
         <div class="form-group">
             <label class="form-label">Nama<span class="form-required">*</span></label>
-            <input type="text" class="form-control" />
+            <input type="text" class="form-control" name="nama" id="nama" />
         </div>
         <div class="form-group">
             <label class="form-label">E-mail<span class="form-required">*</span></label>
-            <input type="email" class="form-control" name="email" />
+            <input type="email" class="form-control" name="email" id="email" />
         </div>
         <div class="form-group">
             <label class="form-label">Kota Asal<span class="form-required">*</span></label>
-            <input type="email" class="form-control" name="kota_asal"/>
+            <select class="form-control" id="kota_asal" name="kota_asal">
+                <option value="3374">Alabama</option>
+            </select>
+            {{-- <input type="text" class="form-control" id="kota_asal" name="kota_asal" value="3374" /> --}}
         </div>
         <div class="form-group mb-0">
             <label class="form-label">Tahun Lahir<span class="form-required">*</span></label>
-            <input type="text" class="form-control" name="thn_lahir" />
+            <input type="number" class="form-control" name="thn_lahir" value="1998" />
         </div>
 </form>
 @endslot
@@ -63,10 +69,27 @@
 @endsection
 
 @section('js')
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script>
-    var save_method;
 
+<!-- Include Choices JavaScript -->
+{{-- <script src="https://cdn.jsdelivr.net/npm/choices.js@4/public/assets/scripts/choices.min.js"></script> --}}
+
+<script>
+    // var element = document.getElementById('kota_asal');
+    // var example = new Choices(element);
+
+    // example.ajax(function(callback) {
+    // fetch(url)
+    //     .then(function(response) {
+    //     response.json().then(function(data) {
+    //         callback(data, 'value', 'label');
+    //     });
+    //     })
+    //     .catch(function(error) {
+    //     console.log(error);
+    //     });
+    // });
+
+    var save_method;
     var btnModalFunc = (type) => {
         save_method = type;
         

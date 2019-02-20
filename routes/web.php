@@ -30,6 +30,9 @@ Route::prefix('admin')->group(function () {
     Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
     Route::get('home', 'HomeController@index');
+
     Route::resource('supplier', 'SupplierController');
+    Route::get('kab_kota_list', 'SupplierController@kab_kota_list_by_keyword');
+
     Route::resource('produk', 'ProdukController');
 });
