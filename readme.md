@@ -1,6 +1,6 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/laravel/art/master/laravel-l-slant.png" style="width: 60px;">
-  <img src="https://vuejs.org/images/logo.png" style="width: 50px;">
+  <img src="https://raw.githubusercontent.com/laravel/art/master/laravel-l-slant.png" width="48">
+  <img src="https://vuejs.org/images/logo.png" width="40">
 </p>
 <h3 align="center">Aplikasi E-Catalog</h3>
 
