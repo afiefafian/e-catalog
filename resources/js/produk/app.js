@@ -10,7 +10,7 @@ Vue.use(VueRouter);
 
 Vue.filter('number_formatter', function (value) {
   if (!value) return ''
-  formatted_val = value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+  var formatted_val = value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
   return formatted_val;
 })
 
