@@ -50,6 +50,7 @@ class ProdukController extends Controller
 
             $row = array();
             $row[] = $list->id;
+            $row[] = $list->nama;
             $row[] = $list->nama_supplier;
             $row[] = 'Rp ' . number_format($list->harga);
             $row[] = $status;

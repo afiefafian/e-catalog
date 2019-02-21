@@ -12,8 +12,13 @@ const mix = require('laravel-mix');
  */
  
  mix.js([
-   'resources/js/app.js',
+   'resources/js/admin/app.js',
    'node_modules/gentelella/src/js/custom',
    'node_modules/gentelella/src/js/helpers/smartresize'
-   ], 'public/js')
- .sass('resources/sass/app.scss', 'public/css');
+   ], 'public/js/admin.js')
+ .sass('resources/sass/admin.scss', 'public/css/admin.css');
+
+ mix.js([
+  'resources/js/produk/app.js',
+  ], 'public/js/produk.js')
+.sass('resources/sass/produk.scss', 'public/css/produk.css');

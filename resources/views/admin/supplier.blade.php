@@ -27,7 +27,7 @@
                     <th>Email</th>
                     <th>Kota</th>
                     <th>Umur</th>
-                    <th>Action</th>
+                    <th></th>
                 </tr>
             </thead>
         </table>
@@ -95,7 +95,7 @@
         
         $('#kota_select').select2({
             placeholder: "Pilih Kota / Kab ...",
-            minimumInputLength: 0,
+            minimumInputLength: 1,
             ajax: {
                 url: '{{ url("admin/kab_kota_list") }}',
                 headers: {
@@ -130,7 +130,13 @@
                 "url" : "{{ url('admin/supplier_data') }}",
                 "type" : "GET"
             },
-            "order": [[ 0, "desc" ]]
+            "order": [[ 0, "desc" ]],
+            "columnDefs": [
+                { "width": "10%", "targets": 0},
+                { "width": "15%", "targets": 4},
+                { "width": "10%", "targets": 5, "orderable": false, "searchable":false  },
+                { className: 'text-center', targets: [0,4,5] },
+            ]
         });
     });
     
@@ -164,8 +170,13 @@
                     clearErrorInput();
                     
                     $.each( data, function( key, value ) {
+                        
                         $('[name="'+key+'"]').parent().parent().addClass('has-error'); 
-                        $('[name="'+key+'"]').next().text(value); 
+                        // if (key != 'kota_asal') {
+                        //     $('[name="'+key+'"]').next().text(value); 
+                        // } else {
+                            $('[name="'+key+'"]').siblings('span.help-block').text(value); 
+                        // }
                     });
                     
                 }
@@ -182,14 +193,14 @@
     var clearErrorInput = function() {
         $('.form-group').removeClass('has-error');
         $('.help-block').empty();
+        $("#kota_select").val('').trigger('change');
     }
     
     var add = function() {
         save_method = 'add';
         $('input[name=_method]').val('POST');
         $('#form-tambah')[0].reset();
-        $('.form-group').removeClass('has-error');
-        $('.help-block').empty();
+        clearErrorInput();
         $('.modal-title').text('Tambah Data');
         $('#email').prop('readonly', false);
         $('#btn-simpan-act').html('Simpan').prop('disabled', false);
@@ -201,8 +212,7 @@
         save_method = "edit";
         $('input[name=_method]').val('PATCH');
         $('#form-tambah')[0].reset();
-        $('.form-group').removeClass('has-error'); 
-        $('.help-block').empty();
+        clearErrorInput();
         $('.modal-title').text('Edit Data');
         $('#btn-simpan-act').html('Simpan').prop('disabled', false);
         $.ajax({
@@ -215,45 +225,12 @@
                 $('#id').val(data.id);
                 $('#nama').val(data.nama);
                 $('#email').val(data.email).prop('readonly', true);
-                // $('#no_telp1').val(data.no_telp1_supplier);
+                $('#kota_asal').val('SEMARANG').trigger('change');
                 $('#thn_lahir').val(data.thn_lahir);
             },
             error : function(){
                 swal('Oops...','Gagal Menampilkan Data!','error');
             }
-        });
-    }
-    
-    var delete_supplier = function(id) {
-        
-        swal({
-            title: 'Are you sure?', 
-            text: "You will not be able to recover this imaginary file!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",   
-            confirmButtonText: "Yes, delete it!",   
-            cancelButtonText: "No, cancel please!",   
-            
-        })
-        .then(result => {
-            if (result.value) {
-                
-                $.ajax({
-                    url : "supplier/"+id,
-                    type: "POST",
-                    data : {'_method' : 'DELETE', '_token' : $('meta[name=csrf-token]').attr('content')},
-                    success: function(data)
-                    {
-                        table.ajax.reload();   
-                        swal('Good job!','Berhasil Mengapus Data','success');
-                    },
-                    error: function (jqXHR, textStatus, errorThrown)
-                    {
-                        swal('Oops...','Gagal Menghapus Data!','error');
-                    }
-                });
-            } 
         });
     }
     

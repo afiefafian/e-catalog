@@ -16,7 +16,13 @@
   
   <!-- Styles -->
   @yield('css')
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+  <style>
+  .dataTables_filter {
+    width: auto;
+    /* max-width: 50%; */
+  }
+  </style>
 </head>
 
 <body class="nav-md">
@@ -52,7 +58,7 @@
   
   
   
-  <script src="{{ asset('js/app.js') }}"></script>
+  <script src="{{ asset('js/admin.js') }}"></script>
   
   @stack('js')
 </body>

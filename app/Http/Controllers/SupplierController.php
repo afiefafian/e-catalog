@@ -42,7 +42,7 @@ class SupplierController extends Controller
         $thn = date('Y');
         foreach($supplier as $list){
             
-            $umur = $thn - $list->thn_lahir;
+            $umur = $thn - $list->thn_lahir . ' Tahun';
 
             $row = array();
             $row[] = $list->id;
@@ -50,7 +50,7 @@ class SupplierController extends Controller
             $row[] = $list->email;
             $row[] = $list->nama_kota;
             $row[] = $umur;
-            $row[] = "<div align='center'>
+            $row[] = "<div align='right'>
             <button id='btn-ubah' type='button' onclick='edit(" .$list->id. ")' class='btn btn-warning btn-xs'><i class='fa fa-edit'></i></button>
             <button id='btn-ubah' type='button' onclick='delete_supplier(" .$list->id. ")' class='btn btn-danger btn-xs'><i class='fa fa-trash-o'></i></button>
             </div>";
@@ -164,7 +164,12 @@ class SupplierController extends Controller
     public function kab_kota_list_by_keyword(Supplier $supplier, Request $request)
     {
         $keyword = $request->input('keyword');
-        $get_data = Regency::where('name', 'like', "%{$keyword}%")->get();
+        $id = $request->input('id');
+        $get_data = Regency::
+            where('name', 'like', "%{$keyword}%")
+            ->where('id', 'like', "%{$id}%")
+            ->limit('30')
+            ->get();
 
         $formatted_data = array();
         foreach ($get_data as $row) {

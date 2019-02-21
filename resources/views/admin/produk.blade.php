@@ -23,10 +23,11 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Nama</th>
                     <th>Supplier</th>
                     <th>Harga Jual</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th></th>
                 </tr>
             </thead>
         </table>
@@ -86,7 +87,7 @@
         <div class="form-group">
             <label class="col-md-3 col-sm-3 col-xs-12 control-label">Gambar</label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                <input id="gambar" name="gambar" class="required form-control input-xs"type="file">
+                <input id="gambar" name="gambar" class="required form-control input-xs" type="file"  accept="image/x-png,image/gif,image/jpeg">
                 <span class="help-block"></span>
                 <img src="" id="gambar-tag" width="200px" />
             </div>
@@ -118,7 +119,13 @@
                 "url" : "{{ url('admin/produk_data') }}",
                 "type" : "GET"
             },
-            "order": [[ 0, "desc" ]]
+            "order": [[ 0, "desc" ]],
+            "columnDefs": [
+                { "width": "10%", "targets": 0},
+                { "width": "10%", "targets": 5, "orderable": false, "searchable":false  },
+                { className: 'text-center', targets: [0,4] },
+                { className: 'text-right', targets: [5,3] },
+            ]
         });
     });
     
@@ -169,8 +176,7 @@
         save_method = 'add';
         $('input[name=_method]').val('POST');
         $('#form-tambah')[0].reset();
-        $('.form-group').removeClass('has-error');
-        $('.help-block').empty();
+        clearErrorInput(0);
         $('.modal-title').text('Tambah Data');
         $('#gambar-tag').attr('src', '');
         $('#btn-simpan-act').html('Simpan').prop('disabled', false);
@@ -182,8 +188,7 @@
         save_method = "edit";
         $('input[name=_method]').val('PATCH');
         $('#form-tambah')[0].reset();
-        $('.form-group').removeClass('has-error'); 
-        $('.help-block').empty();
+        clearErrorInput();
         $('.modal-title').text('Edit Data');
         $('#gambar-tag').attr('src', '');
         $('#btn-simpan-act').html('Simpan').prop('disabled', false);
