@@ -7,9 +7,10 @@
 
 ## Status
 On Development (ada bug)
-### On Progress
-- [x] This is a complete item
-- [ ] This is an incomplete item
+#### On Progress
+- [ ] Fix Landing page css produk item
+- [ ] Tambah detail produk landing page
+- [ ] Tambah detail supplier landing page
 
 ## Sample App
 link : In the process of uploading...  
@@ -22,7 +23,9 @@ Sudah dilengkapi dengan data dummy sehingga dapat langsung di test
 
 ## Minimum Requirement
 - PHP 7.1 keatas
+- MySQL / MariaDB
 - npm
+
 ## Cara Install
 1. Clone `git clone https://github.com/nafiesl/silsilah.git`
 2. `cd e-catalog`
