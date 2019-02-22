@@ -11,10 +11,11 @@ On Development (ada bug)
 - [ ] Fix Landing page css produk item
 - [ ] Tambah detail produk landing page
 - [ ] Tambah detail supplier landing page
+- [ ] Animasi loading produk
 
-## Sample App
-link : In the process of uploading...  
-username : admin@admin.com  
+## Demo
+link : [catalog](https://e-catalog.afiefafian.com/) | [web admin](https://e-catalog.afiefafian.com/admin)  
+username : 'admin@admin.com'  
 password : secret
 
 ## Tentang
@@ -24,7 +25,7 @@ Sudah dilengkapi dengan data dummy sehingga dapat langsung di test
 ## Minimum Requirement
 - PHP 7.1 keatas
 - MySQL / MariaDB
-- npm
+- NPM
 
 ## Cara Install
 1. Clone `git clone https://github.com/nafiesl/silsilah.git`
@@ -33,7 +34,7 @@ Sudah dilengkapi dengan data dummy sehingga dapat langsung di test
 4. `npm install`
 4. `cp .env.example .env`
 5. `php artisan key:generate`
-6. `chmod -R 775 storage bootstrap/cache`
+6. `chmod -R 755 storage bootstrap/cache`
 7. Create database di lokal
 8. Konfigurasi database  di file `.env` 
 9. `php artisan migrate:fresh --seed`
