@@ -28,7 +28,7 @@ Sudah dilengkapi dengan data dummy sehingga dapat langsung di test
 - NPM
 
 ## Cara Install
-1. Clone `git clone https://github.com/nafiesl/silsilah.git`
+1. Clone `git clone https://github.com/afiefafian/e-catalog.git`
 2. `cd e-catalog`
 3. `composer install`
 4. `npm install`
