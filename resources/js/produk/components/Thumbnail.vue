@@ -22,12 +22,9 @@
 </script>
 <style scoped>
   .thumbnail {
-    height: 262px;
-    border-radius: 2px;
-    border: none;
-    -webkit-box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.25);
-    -moz-box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.25);
-    box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.25);
+    height: 240px;
+    border-radius: 3px;
+    border: 1px solid #dddddd;
     transition: box-shadow 0.15s ease-in-out;
     padding: 0;
   }
@@ -46,7 +43,6 @@
     overflow: hidden;
   }
   
-  
   .thumbnail .img-container > img {
     width: auto;
     height: auto;
@@ -60,12 +56,39 @@
     zoom:0.8;
   }
   
+  .caption {
+    position: relative;
+    height: 92px;
+  }
+  .c_nama {
+    margin: 0;
+    font-size: 14px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 97%;
+    height: 60px;
+  }
+
   .c_harga {
-    color: E94F37;
+    position: absolute;
+    bottom: 19px;
+    color: #E94F37;
+    font-weight: 700;
   }
 
   .c_supplier {
-    font-size: 12px;
+    position: absolute;
+    bottom: 0;
+    font-size: 11px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 97%;
+    display: inline-block;
   }
 
   .no-image {
@@ -73,4 +96,5 @@
     text-align: center;
     margin-top: 65px;
   }
+
 </style>
