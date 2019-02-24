@@ -60,7 +60,7 @@
         </div>
         
         <div class="form-group">
-            <label class="col-md-3 col-sm-3 col-xs-12 control-label">Kota</label>
+            <label class="col-md-3 col-sm-3 col-xs-12 control-label">Kota / Kab Asal</label>
             <div class="col-md-8 col-sm-8 col-xs-12">
                 <select id="kota_select" name="kota_asal" class="required form-control input-xs" style="width: 100% !important;">
                 </select>
@@ -94,7 +94,7 @@
     $(function(){
         
         $('#kota_select').select2({
-            placeholder: "Pilih Kota / Kab ...",
+            placeholder: "Pilih Kota / Kab Asal ...",
             minimumInputLength: 1,
             ajax: {
                 url: '{{ url("admin/kab_kota_list") }}',
@@ -159,31 +159,28 @@
             success : function(data){
                 if((data.message)){
                     $('body').css('padding-right','0');
+                    $("#kota_select").val('').trigger('change');
                     $('#modals-data').modal('hide');
-                    swal('Good job!','Berhasil Menyimpan Data','success');
-                    
+                     swal('Good job!','Berhasil Menyimpan Data','success');
+            
                     table.ajax.reload();
                 } else {
-                    
+            
                     $('#btn-simpan-act').html('Simpan').prop('disabled', false);
-                    
+            
                     clearErrorInput();
-                    
+            
                     $.each( data, function( key, value ) {
                         
                         $('[name="'+key+'"]').parent().parent().addClass('has-error'); 
-                        // if (key != 'kota_asal') {
-                        //     $('[name="'+key+'"]').next().text(value); 
-                        // } else {
-                            $('[name="'+key+'"]').siblings('span.help-block').text(value); 
-                        // }
+                        $('[name="'+key+'"]').siblings('span.help-block').text(value);
                     });
                     
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 $('#btn-simpan-act').html('Simpan').prop('disabled', false);
-                
+                        
                 swal('Oops...','Terdapat gangguan server!','error');
             }
             
@@ -193,7 +190,6 @@
     var clearErrorInput = function() {
         $('.form-group').removeClass('has-error');
         $('.help-block').empty();
-        $("#kota_select").val('').trigger('change');
     }
     
     var add = function() {
@@ -201,18 +197,20 @@
         $('input[name=_method]').val('POST');
         $('#form-tambah')[0].reset();
         clearErrorInput();
+        $("#kota_select").val('').trigger('change');
         $('.modal-title').text('Tambah Data');
         $('#email').prop('readonly', false);
         $('#btn-simpan-act').html('Simpan').prop('disabled', false);
         $('#modals-data').modal('show');
     }
     
-    
+            
     var edit = function(id) {
         save_method = "edit";
         $('input[name=_method]').val('PATCH');
         $('#form-tambah')[0].reset();
         clearErrorInput();
+        $("#kota_select").val('').trigger('change');
         $('.modal-title').text('Edit Data');
         $('#btn-simpan-act').html('Simpan').prop('disabled', false);
         $.ajax({
@@ -221,19 +219,29 @@
             dataType : "JSON",
             success : function(data){
                 $('#modals-data').modal('show');
-                
+                        
                 $('#id').val(data.id);
                 $('#nama').val(data.nama);
                 $('#email').val(data.email).prop('readonly', true);
-                $('#kota_asal').val('SEMARANG').trigger('change');
                 $('#thn_lahir').val(data.thn_lahir);
+
+                //select2 v4 pre select data from ajax
+                var option = new Option(data.nama_kota, data.kota_asal, true, true);
+                $("#kota_select").append(option).trigger('change');
+                $("#kota_select").trigger({
+                    type: 'select2:select',
+                    params: {
+                        data: nama_kota
+                    }
+                });
+
             },
             error : function(){
                 swal('Oops...','Gagal Menampilkan Data!','error');
             }
         });
     }
-    
+            
 </script>
 @endpush
-
+        

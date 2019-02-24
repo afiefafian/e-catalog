@@ -8,6 +8,7 @@
 ## Status
 On Development (ada bug)
 #### On Progress
+- [x] Fix dropdown kota/kab ketika edit data
 - [ ] Fix Landing page css produk item
 - [ ] Tambah detail produk landing page
 - [ ] Tambah detail supplier landing page

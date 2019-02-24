@@ -118,7 +118,10 @@ class SupplierController extends Controller
      */
     public function edit($id)
     {
-        $supplier = Supplier::find($id);
+        $supplier = Supplier::select('suppliers.*', 'indoregion_regencies.name AS nama_kota')
+            ->join('indoregion_regencies', 'suppliers.kota_asal' , '=', 'indoregion_regencies.id')
+            ->where('suppliers.id', $id)
+            ->first();
         return response()->json($supplier);
     }
 
