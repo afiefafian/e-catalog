@@ -231,7 +231,7 @@
                 $("#kota_select").trigger({
                     type: 'select2:select',
                     params: {
-                        data: nama_kota
+                        data: data.nama_kota
                     }
                 });
 
