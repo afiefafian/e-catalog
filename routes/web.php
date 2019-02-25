@@ -34,15 +34,19 @@ Route::prefix('admin')->group(function () {
     Route::post('login', 'Auth\LoginController@login');
     Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
-    //dashboard
-    Route::get('home', 'HomeController@index');
-
-    //supplier
-    Route::resource('supplier', 'SupplierController');
-    Route::get('supplier_data', 'SupplierController@listData');
-    Route::get('kab_kota_list', 'SupplierController@kab_kota_list_by_keyword');
     
-    //produk
-    Route::resource('produk', 'ProdukController');
-    Route::get('produk_data', 'ProdukController@listData');
+    Route::group(['middleware' => 'auth'], function () {
+        //dashboard
+        Route::get('home', 'HomeController@index');
+
+        //supplier
+        Route::resource('supplier', 'SupplierController');
+        Route::get('supplier_data', 'SupplierController@listData');
+        Route::get('kab_kota_list', 'SupplierController@kab_kota_list_by_keyword');
+        
+        //produk
+        Route::resource('produk', 'ProdukController');
+        Route::get('produk_data', 'ProdukController@listData');
+    });
+
 });
