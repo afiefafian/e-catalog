@@ -67,7 +67,8 @@
         <div class="form-group">
             <label class="col-md-3 col-sm-3 col-xs-12 control-label">Harga Jual</label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                <input id="harga" name="harga" class="required form-control input-xs" placeholder="Harga Jual" type="number" >
+                <input id="harga_formatted" class="required form-control input-xs" placeholder="Harga Jual" type="text" >
+                <input id="harga" type="hidden" name="harga">
                 <span class="help-block"></span>
             </div>
         </div>
@@ -106,6 +107,7 @@
 <script src="{{ asset('plugin/bootstrap-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 <script src="https://cdn.datatables.net/v/bs/dt-1.10.18/r-2.2.2/datatables.min.js" type="text/javascript" ></script>
 <script src="http://malsup.github.com/jquery.form.js"></script>
+<script src="https://nosir.github.io/cleave.js/dist/cleave.min.js"></script>
 <script>
     var table, save_method;
     $(function(){
@@ -126,6 +128,15 @@
         });
     });
     
+    var hargaInputMask = new Cleave('#harga_formatted', {
+        numeral: true,
+        numeralThousandsGroupStyle: 'thousand'
+    });
+
+    $('#harga_formatted').on('keyup', function() {
+        $('#harga').val(hargaInputMask.getRawValue());
+    });
+
     $(document).on('click', '#btn-simpan-act', function() {
         
         $('#btn-simpan-act').html('Menyimpan ...').prop('disabled', true);
@@ -176,11 +187,12 @@
         clearErrorInput(0);
         $('.modal-title').text('Tambah Data');
         $('#gambar-tag').attr('src', '');
+        $('#harga_formatted').val('');
+        $('#harga').val('');
         $('#btn-simpan-act').html('Simpan').prop('disabled', false);
         $('#modals-data').modal('show');
     }
-    
-    
+        
     var edit = function(id) {
         save_method = "edit";
         $('input[name=_method]').val('PATCH');
@@ -188,6 +200,8 @@
         clearErrorInput();
         $('.modal-title').text('Edit Data');
         $('#gambar-tag').attr('src', '');
+        $('#harga_formatted').val('');
+        $('#harga').val('');
         $('#btn-simpan-act').html('Simpan').prop('disabled', false);
         $.ajax({
             url : "produk/"+id+"/edit",
@@ -199,6 +213,7 @@
                 $('#id').val(data.id);
                 $('#nama').val(data.nama);
                 $('#supplier_id').val(data.supplier_id);
+                hargaInputMask.setRawValue(data.harga);
                 $('#harga').val(data.harga);
                 
                 if (data.active) {
