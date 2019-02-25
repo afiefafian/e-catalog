@@ -67,7 +67,7 @@
         <div class="form-group">
             <label class="col-md-3 col-sm-3 col-xs-12 control-label">Harga Jual</label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                <input id="harga_formatted" class="required form-control input-xs" placeholder="Harga Jual" type="text" >
+                <input id="harga_formatted" class="required form-control input-xs text-right" placeholder="Harga Jual" type="text">
                 <input id="harga" type="hidden" name="harga">
                 <span class="help-block"></span>
             </div>
