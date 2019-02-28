@@ -13,7 +13,7 @@
         <h2>Supplier</h2>
         <ul class="nav navbar-right panel_toolbox">
             <li>
-                <button type="button" id="btn-tambah" onclick='add()' class="btn btn-success btn-sm"> <i class="fa fa-plus"></i> Tambah</button>
+                <button type="button" id="btn-tambah" onclick="add()" class="btn btn-success btn-sm no-margin"> <i class="fa fa-plus"></i> Tambah</button>
             </li>
         </ul>
         <div class="clearfix"></div>

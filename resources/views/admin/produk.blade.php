@@ -13,7 +13,7 @@
         <h2>Produk</h2>
         <ul class="nav navbar-right panel_toolbox">
             <li>
-                <button type="button" id="btn-tambah" onclick='add()' class="btn btn-success btn-sm"> <i class="fa fa-plus"></i> Tambah</button>
+                <button type="button" id="btn-tambah" onclick="add()" class="btn btn-success btn-sm no-margin"> <i class="fa fa-plus"></i> Tambah</button>
             </li>
         </ul>
         <div class="clearfix"></div>
@@ -54,7 +54,7 @@
         <div class="form-group">
             <label class="col-md-3 col-sm-3 col-xs-12 control-label">Supplier</label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                <select id="supplier_id" name="supplier_id" class="form-control">
+                <select id="supplier_id" name="supplier_id" class="form-control" style="width: 100% !important;">
                     <option value="">Pilih Supplier ...</option>
                     @foreach($suppliers as $supplier)
                     <option value='{{$supplier->id}}'>{{$supplier->nama}}</option>
@@ -78,7 +78,7 @@
             <div class="col-md-8 col-sm-8 col-xs-12">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" id="active" name="active"> Aktif
+                        <input type="checkbox" id="active" name="active"> <span id="status_produk_txt">Non Aktif</span>
                     </label>
                 </div>
             </div>
@@ -120,14 +120,16 @@
             },
             "order": [[ 0, "desc" ]],
             "columnDefs": [
-            { "width": "10%", "targets": 0},
-            { "width": "10%", "targets": 5, "orderable": false, "searchable":false  },
-            { className: 'text-center', targets: [0,4] },
-            { className: 'text-right', targets: [5,3] },
+                { "width": "10%", "targets": 0},
+                { "width": "10%", "targets": 5, "orderable": false, "searchable":false  },
+                { className: 'text-center', targets: [0,4] },
+                { className: 'text-right', targets: [3,5] }
             ]
         });
     });
     
+    $('#supplier_id').select2();
+
     var hargaInputMask = new Cleave('#harga_formatted', {
         numeral: true,
         numeralThousandsGroupStyle: 'thousand'
@@ -135,6 +137,15 @@
 
     $('#harga_formatted').on('keyup', function() {
         $('#harga').val(hargaInputMask.getRawValue());
+    });
+
+    $('#active').on('change', function() {
+        if ($('#active').is(":checked"))
+        {
+            $('#status_produk_txt').text('Aktif');
+        } else {
+            $('#status_produk_txt').text('Non Aktif');
+        }
     });
 
     $(document).on('click', '#btn-simpan-act', function() {
@@ -161,8 +172,8 @@
                     $('#btn-simpan-act').html('Simpan').prop('disabled', false);
                     clearErrorInput();
                     $.each(response, function( key, value ) {
-                        $('[name="'+key+'"]').parent().parent().addClass('has-error'); 
-                        $('[name="'+key+'"]').next().text(value); 
+                        $('[name="'+key+'"]').parent().parent().addClass('has-error');
+                        $('[name="'+key+'"]').siblings('span.help-block').text(value);
                     });
                 }
             },
@@ -185,7 +196,9 @@
         $('input[name=_method]').val('POST');
         $('#form-tambah')[0].reset();
         clearErrorInput(0);
+        $("#supplier_id").val('').trigger('change');
         $('.modal-title').text('Tambah Data');
+        $('#status_produk_txt').text('Non Aktif');
         $('#gambar-tag').attr('src', '');
         $('#harga_formatted').val('');
         $('#harga').val('');
@@ -198,6 +211,7 @@
         $('input[name=_method]').val('PATCH');
         $('#form-tambah')[0].reset();
         clearErrorInput();
+        $("#supplier_id").val('').trigger('change');
         $('.modal-title').text('Edit Data');
         $('#gambar-tag').attr('src', '');
         $('#harga_formatted').val('');
@@ -212,14 +226,16 @@
                 
                 $('#id').val(data.id);
                 $('#nama').val(data.nama);
-                $('#supplier_id').val(data.supplier_id);
+                $('#supplier_id').val(data.supplier_id).trigger('change');
                 hargaInputMask.setRawValue(data.harga);
                 $('#harga').val(data.harga);
                 
                 if (data.active) {
                     $('#active').prop('checked', true);
+                    $('#status_produk_txt').text('Aktif');
                 } else {
                     $('#active').prop('checked', false);
+                    $('#status_produk_txt').text('Non Aktif');
                 }
                 
                 if (data.url_gambar != null && data.url_gambar != '') {
