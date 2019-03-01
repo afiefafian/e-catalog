@@ -36,72 +36,78 @@
 
 
 {{-- tabel input data --}}
-@component('layouts.admin.components.modal')
+@component('layouts.admin.components.modal', 
+    ['modal_id' => 'modals-data', 'title' => 'Tambah Data'])
 @slot('content')
-<form id="form-tambah" data-parsley-validate enctype="multipart/form-data" method="POST">
-    {{ csrf_field() }} {{ method_field('POST') }}
-    <div class="form-horizontal">
-        <input id="id" name="id" type='hidden'>
-        
-        <div class="form-group">
-            <label class="col-md-3 col-sm-3 col-xs-12 control-label">Nama Produk</label>
-            <div class="col-md-8 col-sm-8 col-xs-12">
-                <input id="nama" name="nama" class="required form-control input-xs" placeholder="Nama Produk" type="text" >
-                <span class="help-block"></span>
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label class="col-md-3 col-sm-3 col-xs-12 control-label">Supplier</label>
-            <div class="col-md-8 col-sm-8 col-xs-12">
-                <select id="supplier_id" name="supplier_id" class="form-control" style="width: 100% !important;">
-                    <option value="">Pilih Supplier ...</option>
-                    @foreach($suppliers as $supplier)
-                    <option value='{{$supplier->id}}'>{{$supplier->nama}}</option>
-                    @endforeach
-                </select>
-                <span class="help-block"></span>
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label class="col-md-3 col-sm-3 col-xs-12 control-label">Harga Jual</label>
-            <div class="col-md-8 col-sm-8 col-xs-12">
-                <input id="harga_formatted" class="required form-control input-xs text-right" placeholder="Harga Jual" type="text">
-                <input id="harga" type="hidden" name="harga">
-                <span class="help-block"></span>
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label class="col-md-3 col-sm-3 col-xs-12 control-label">Status</label>
-            <div class="col-md-8 col-sm-8 col-xs-12">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" id="active" name="active"> <span id="status_produk_txt">Non Aktif</span>
-                    </label>
+    <form id="form-tambah" data-parsley-validate enctype="multipart/form-data" method="POST">
+        {{ csrf_field() }} {{ method_field('POST') }}
+        <div class="form-horizontal">
+            <input id="id" name="id" type='hidden'>
+            
+            <div class="form-group">
+                <label class="col-md-3 col-sm-3 col-xs-12 control-label">Nama Produk</label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                    <input id="nama" name="nama" class="required form-control input-xs" placeholder="Nama Produk" type="text" >
+                    <span class="help-block"></span>
                 </div>
             </div>
-        </div>
-        
-        
-        <div class="form-group">
-            <label class="col-md-3 col-sm-3 col-xs-12 control-label">Gambar</label>
-            <div class="col-md-8 col-sm-8 col-xs-12">
-                <input id="gambar_input" class="required form-control input-xs" type="file" accept="image/x-png,image/gif,image/jpeg">
-                <input id="gambar" type="hidden" name="gambar">
+            
+            <div class="form-group">
+                <label class="col-md-3 col-sm-3 col-xs-12 control-label">Supplier</label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                    <select id="supplier_id" name="supplier_id" class="form-control" style="width: 100% !important;">
+                        <option value="">Pilih Supplier ...</option>
+                        @foreach($suppliers as $supplier)
+                        <option value='{{$supplier->id}}'>{{$supplier->nama}}</option>
+                        @endforeach
+                    </select>
+                    <span class="help-block"></span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="col-md-3 col-sm-3 col-xs-12 control-label">Harga Jual</label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                    <input id="harga_formatted" class="required form-control input-xs text-right" placeholder="Harga Jual" type="text">
+                    <input id="harga" type="hidden" name="harga">
+                    <span class="help-block"></span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="col-md-3 col-sm-3 col-xs-12 control-label">Status</label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="active" name="active"> <span id="status_produk_txt">Non Aktif</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="form-group">
+                <label class="col-md-3 col-sm-3 col-xs-12 control-label">Gambar</label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                    <input id="gambar_input" class="required form-control input-xs" type="file" accept="image/x-png,image/gif,image/jpeg">
+                    <input id="gambar" type="hidden" name="gambar">
+                </div>
+            </div>
+            <div class="col-md-9 col-sm-9 col-md-offset-2 col-sm-offset-2 col-xs-12">
+                <img src="" id="gambar-preview" width="100%" />
             </div>
         </div>
-        <div class="col-md-9 col-sm-9 col-md-offset-2 col-sm-offset-2 col-xs-12">
-            <img src="" id="gambar-preview" width="100%" />
-        </div>
-    </div>
-    
-</form>
+        
+    </form>
+@endslot
+@slot('button_action')
+    <button data-dismiss="modal" class="btn btn-default" type="button">Batal</button>
+    <button id="btn-simpan-act" class="btn btn-success" type="button">Simpan</button>
 @endslot
 @endcomponent
 
 
+//tidak bisa menggunakan component karena croppie akan error
 <div class="modal" id="modals-cropper" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">

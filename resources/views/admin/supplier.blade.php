@@ -36,48 +36,53 @@
 
 
 {{-- tabel input data --}}
-@component('layouts.admin.components.modal')
+@component('layouts.admin.components.modal', 
+    ['modal_id' => 'modals-data', 'title' => 'Tambah Data'])
 @slot('content')
-<form id="form-tambah" data-parsley-validate action="" enctype="multipart/form-data">
-    {{ csrf_field() }} {{ method_field('POST') }}
-    <div class="form-horizontal">
-        <input id="id" name="id" type='hidden'>
-        
-        <div class="form-group">
-            <label class="col-md-3 col-sm-3 col-xs-12 control-label">Nama</label>
-            <div class="col-md-8 col-sm-8 col-xs-12">
-                <input id="nama" name="nama" class="required form-control input-xs" placeholder="Nama" type="text" >
-                <span class="help-block"></span>
+    <form id="form-tambah" data-parsley-validate action="" enctype="multipart/form-data">
+        {{ csrf_field() }} {{ method_field('POST') }}
+        <div class="form-horizontal">
+            <input id="id" name="id" type='hidden'>
+            
+            <div class="form-group">
+                <label class="col-md-3 col-sm-3 col-xs-12 control-label">Nama</label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                    <input id="nama" name="nama" class="required form-control input-xs" placeholder="Nama" type="text" >
+                    <span class="help-block"></span>
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group">
-            <label class="col-md-3 col-sm-3 col-xs-12 control-label">Email</label>
-            <div class="col-md-8 col-sm-8 col-xs-12">
-                <input id="email" name="email" class="required form-control input-xs" placeholder="Email" type="email" >
-                <span class="help-block"></span>
+            
+            <div class="form-group">
+                <label class="col-md-3 col-sm-3 col-xs-12 control-label">Email</label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                    <input id="email" name="email" class="required form-control input-xs" placeholder="Email" type="email" >
+                    <span class="help-block"></span>
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group">
-            <label class="col-md-3 col-sm-3 col-xs-12 control-label">Kota / Kab Asal</label>
-            <div class="col-md-8 col-sm-8 col-xs-12">
-                <select id="kota_select" name="kota_asal" class="required form-control input-xs" style="width: 100% !important;">
-                </select>
-                <span class="help-block"></span>
+            
+            <div class="form-group">
+                <label class="col-md-3 col-sm-3 col-xs-12 control-label">Kota / Kab Asal</label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                    <select id="kota_select" name="kota_asal" class="required form-control input-xs" style="width: 100% !important;">
+                    </select>
+                    <span class="help-block"></span>
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group">
-            <label class="col-md-3 col-sm-3 col-xs-12 control-label">Tahun Lahir</label>
-            <div class="col-md-8 col-sm-8 col-xs-12">
-                <input id="thn_lahir" name="thn_lahir" class="required form-control input-xs" placeholder="Tahun Lahir" type="text" >
-                <span class="help-block"></span>
+            
+            <div class="form-group">
+                <label class="col-md-3 col-sm-3 col-xs-12 control-label">Tahun Lahir</label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                    <input id="thn_lahir" name="thn_lahir" class="required form-control input-xs" placeholder="Tahun Lahir" type="text" >
+                    <span class="help-block"></span>
+                </div>
             </div>
+            
         </div>
-        
-    </div>
-</form>
+    </form>
+@endslot
+@slot('button_action')
+    <button data-dismiss="modal" class="btn btn-default" type="button">Batal</button>
+    <button id="btn-simpan-act" class="btn btn-success" type="button">Simpan</button>
 @endslot
 @endcomponent
 
