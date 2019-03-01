@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.6"
     },
     "dependencies": {
+        "croppie": "^2.6.3",
         "gentelella": "^1.4.0",
         "moment": "^2.24.0",
         "sweetalert2": "^7.4.1",

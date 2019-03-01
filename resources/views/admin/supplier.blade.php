@@ -77,7 +77,6 @@
         </div>
         
     </div>
-    
 </form>
 @endslot
 @endcomponent
@@ -191,7 +190,7 @@
         $('.form-group').removeClass('has-error');
         $('.help-block').empty();
     }
-    
+
     var add = function() {
         save_method = 'add';
         $('input[name=_method]').val('POST');

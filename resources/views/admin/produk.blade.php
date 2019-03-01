@@ -88,16 +88,39 @@
         <div class="form-group">
             <label class="col-md-3 col-sm-3 col-xs-12 control-label">Gambar</label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-                <input id="gambar" name="gambar" class="required form-control input-xs" type="file"  accept="image/x-png,image/gif,image/jpeg">
-                <span class="help-block"></span>
-                <img src="" id="gambar-tag" width="200px" />
+                <input id="gambar_input" class="required form-control input-xs" type="file" accept="image/x-png,image/gif,image/jpeg">
+                <input id="gambar" type="hidden" name="gambar">
             </div>
+        </div>
+        <div class="col-md-9 col-sm-9 col-md-offset-2 col-sm-offset-2 col-xs-12">
+            <img src="" id="gambar-preview" width="100%" />
         </div>
     </div>
     
 </form>
 @endslot
 @endcomponent
+
+
+<div class="modal" id="modals-cropper" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Pilih Gambar</h4>
+            </div>
+            <div class="modal-body">
+                <!-- <div class="col-md-9 col-sm-9 col-md-offset-2 col-sm-offset-2 col-xs-12"> -->
+                    <img src="" id="gambar-tag" width="100%" />
+                <!-- </div> -->
+            </div>
+            <div class="modal-footer">
+                <button id="btn-crop-img-close" class="btn btn-default" type="button">Batal</button>
+                <button id="btn-crop-img-select" class="btn btn-success" type="button">Pilih</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 
@@ -108,8 +131,9 @@
 <script src="https://cdn.datatables.net/v/bs/dt-1.10.18/r-2.2.2/datatables.min.js" type="text/javascript" ></script>
 <script src="http://malsup.github.com/jquery.form.js"></script>
 <script src="https://nosir.github.io/cleave.js/dist/cleave.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.5.1/croppie.min.js"></script>
 <script>
-    var table, save_method;
+    var table, save_method, resize;
     $(function(){
         table = $('#tabel-data').DataTable({
             "processing" : true,
@@ -148,10 +172,37 @@
         }
     });
 
+    var load_image = function(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#gambar-tag').attr('src', e.target.result);
+                resize = new Croppie($('#gambar-tag')[0], {
+                    viewport: { width: 300, height: 200 },
+                    boundary: { width: 450, height: 300 },
+                    enableResize: true,
+                    enableOrientation: true
+                });
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#gambar_input").on('change', function() {
+        clearCroppie();
+        if ($("#gambar_input").val() != "") {
+            load_image(this);
+            $('#modals-cropper').modal('show');
+        }
+    });
+    
+
     $(document).on('click', '#btn-simpan-act', function() {
-        
         $('#btn-simpan-act').html('Menyimpan ...').prop('disabled', true);
         
+        clearErrorInput();
+
         var id = $('#id').val();
         if(save_method == "add") {
             url = "{{ url('admin/produk' )}}";
@@ -165,6 +216,7 @@
                 if(response.message){
                     $('body').css('padding-right','0');
                     $('#modals-data').modal('hide');
+
                     swal('Good job!','Berhasil Menyimpan Data','success');
                     
                     table.ajax.reload();
@@ -186,20 +238,55 @@
         
     });
     
+    $('#btn-crop-img-select').on('click', function() {
+        getCroppedImg();
+        $('#modals-cropper').modal('hide');
+    });
+
+    $('#btn-crop-img-close').on('click', function() {
+        $('#modals-cropper').modal('hide');
+        clearCroppie();
+    });
+
+    $('#modals-cropper').on('hidden.bs.modal', function () {
+        $('#modals-cropper').modal('hide');
+        clearCroppie();
+    })
+
     var clearErrorInput = function() {
         $('.form-group').removeClass('has-error');
         $('.help-block').empty();
     }
     
+    var clearCroppie = function() {
+        $('#gambar').val('');
+        $('#gambar-tag').attr('src', '');
+        if (resize) {
+            $('#gambar_input').val('');
+            resize.destroy();
+            resize = null;
+        }
+        
+    }
+
+    var getCroppedImg = function() {
+        if (resize) {
+            resize.result('base64').then(function(dataImg) {
+                $('#gambar-preview').attr('src', dataImg);
+                $('#gambar').val(dataImg);
+            });
+        }
+    }
+
     var add = function() {
         save_method = 'add';
         $('input[name=_method]').val('POST');
         $('#form-tambah')[0].reset();
-        clearErrorInput(0);
+        clearErrorInput();
         $("#supplier_id").val('').trigger('change');
-        $('.modal-title').text('Tambah Data');
+        $('#modals-data .modal-title').text('Tambah Data');
         $('#status_produk_txt').text('Non Aktif');
-        $('#gambar-tag').attr('src', '');
+        clearCroppie();
         $('#harga_formatted').val('');
         $('#harga').val('');
         $('#btn-simpan-act').html('Simpan').prop('disabled', false);
@@ -212,8 +299,8 @@
         $('#form-tambah')[0].reset();
         clearErrorInput();
         $("#supplier_id").val('').trigger('change');
-        $('.modal-title').text('Edit Data');
-        $('#gambar-tag').attr('src', '');
+        $('#modals-data .modal-title').text('Edit Data');
+        clearCroppie();
         $('#harga_formatted').val('');
         $('#harga').val('');
         $('#btn-simpan-act').html('Simpan').prop('disabled', false);
@@ -240,7 +327,7 @@
                 
                 if (data.url_gambar != null && data.url_gambar != '') {
                     var src = "{{ asset('public/images/produk/') }}/"+data.url_gambar;
-                    $('#gambar-tag').attr('src', src);
+                    $('#gambar-preview').attr('src', src);
                 }
                 
             },

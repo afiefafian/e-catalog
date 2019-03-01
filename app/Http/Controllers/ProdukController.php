@@ -15,9 +15,9 @@ class ProdukController extends Controller
     private function _validator()
     {
         return array(
-            'nama'=> 'required',
-            'supplier_id' => 'required',
-            'harga' => 'required'
+            'nama'          => 'required',
+            'supplier_id'   => 'required',
+            'harga'         => 'required'
         );
     }
 
@@ -90,11 +90,21 @@ class ProdukController extends Controller
             return response()->json($validator->errors());
         } else {
 
-            $file = $request->file('gambar'); 
+            $file = $request->gambar; 
             if ($file != '') {
-                $Ext = $file->getClientOriginalExtension();
-                $gambar = "brg_".date('YmdHis').".$Ext";
-                $request->file('gambar')->move(public_path() . '/public/images/produk', $gambar);
+                //make folder if not exist
+                if (!file_exists(public_path().'/public/images/produk/')) {
+                    mkdir(public_path().'/public/images/produk/', 0755, true);
+                }
+
+                $image = str_replace('data:image/png;base64,', '', $file);
+                $image = str_replace(' ', '+', $image);
+                $gambar = "brg_".date('YmdHis').".png";
+                $path = public_path().'/public/images/produk/' . $gambar;
+
+                // if($image!=""){
+                    \File::put($path, base64_decode($image));    
+                // }
             } 
 
             $produk = new Produk();
@@ -157,16 +167,26 @@ class ProdukController extends Controller
             return response()->json($validator->errors());
         } else {
 
-            $file = $request->file('gambar'); 
+            $file = $request->gambar; 
             if ($file != '') {
-                $Ext = $file->getClientOriginalExtension();
-                $gambar = "prd_".date('YmdHis').".$Ext";
-                $request->file('gambar')->move(public_path() . '/public/images/produk', $gambar);
+                //make folder if not exist
+                if (!file_exists(public_path().'/public/images/produk/')) {
+                    mkdir(public_path().'/public/images/produk/', 0755, true);
+                }
+
+                $image = str_replace('data:image/png;base64,', '', $file);
+                $image = str_replace(' ', '+', $image);
+                $gambar = "brg_".date('YmdHis').".png";
+                $path = public_path().'/public/images/produk/' . $gambar;
+
+                \File::put($path, base64_decode($image));
 
                 if ($produk->url_gambar != null) {
                     unlink('./public/images/produk/' . $produk->url_gambar);
                 }
+                
             } 
+
 
             $produk->nama = $request->nama;
             $produk->supplier_id= $request->supplier_id;
