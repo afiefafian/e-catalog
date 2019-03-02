@@ -63,14 +63,13 @@
   .c_nama {
     margin: 0;
     font-size: 14px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     overflow: hidden;
-    max-width: 97%;
-    height: 60px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-height: 14px;
+    max-height: 28px; 
   }
 
   .c_harga {

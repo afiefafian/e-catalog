@@ -107,7 +107,7 @@
 @endcomponent
 
 
-//tidak bisa menggunakan component karena croppie akan error
+<!-- //tidak bisa menggunakan component karena croppie akan error -->
 <div class="modal" id="modals-cropper" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -116,9 +116,7 @@
                 <h4 class="modal-title">Pilih Gambar</h4>
             </div>
             <div class="modal-body">
-                <!-- <div class="col-md-9 col-sm-9 col-md-offset-2 col-sm-offset-2 col-xs-12"> -->
-                    <img src="" id="gambar-tag" width="100%" />
-                <!-- </div> -->
+                <img src="" id="gambar-tag" width="100%" />
             </div>
             <div class="modal-footer">
                 <button id="btn-crop-img-close" class="btn btn-default" type="button">Batal</button>

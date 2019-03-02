@@ -13,7 +13,7 @@ class ProduksSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Produk::class, 50)->create([
+        factory(App\Produk::class, 150)->create([
             'posted_by_id' => $this->getRandomUser()->id,
             'posted_by_name' => $this->getRandomUser()->name,
         ]);

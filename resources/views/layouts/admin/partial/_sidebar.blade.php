@@ -35,6 +35,11 @@
                             <i class="fa fa-barcode"></i> Produk
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ url('/admin/profile') }}">
+                            <i class="fa fa-user"></i> Profil User
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

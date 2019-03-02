@@ -47,6 +47,9 @@ Route::prefix('admin')->group(function () {
         //produk
         Route::resource('produk', 'ProdukController');
         Route::get('produk_data', 'ProdukController@listData');
+
+        //profile
+        Route::get('profile', 'ProfileController@index');
     });
 
 });

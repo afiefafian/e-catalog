@@ -45,7 +45,7 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-static-top" style="z-index: 1000; margin-bottom: 0; position: absolute; width: 100%;">
+    <!-- <nav class="navbar navbar-default navbar-static-top" style="z-index: 1000; margin-bottom: 0; position: absolute; width: 100%;">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">LapakSebelah</a>
@@ -59,7 +59,7 @@
             <h1 style="margin-top: 25vh;">Hello, world!</h1>
             <p>LapakSebelah yang paling kekinian</p>
         </div>
-    </div>
+    </div> -->
 
     <div class="container" id="app">
         <div class="row">

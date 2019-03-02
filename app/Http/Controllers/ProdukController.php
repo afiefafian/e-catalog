@@ -54,7 +54,7 @@ class ProdukController extends Controller
             $row[] = $list->nama_supplier;
             $row[] = 'Rp ' . number_format($list->harga);
             $row[] = $status;
-            $row[] = "<div align='right'>
+            $row[] = "<div class='btn-group' align='right'>
             <button id='btn-ubah' type='button' onclick='edit(" .$list->id. ")' class='btn btn-warning btn-xs no-margin'><i class='fa fa-edit'></i></button>
             <button id='btn-ubah' type='button' onclick='delete_produk(" .$list->id. ")' class='btn btn-danger btn-xs no-margin'><i class='fa fa-trash-o'></i></button>
             </div>";

@@ -16,7 +16,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
                         <li>
-                            <a href="javascript:;"> Profile</a>
+                            <a href="{{ url('admin/profile') }}"> Profile</a>
                         </li>
                         <li>
                             <a href="{{ url('logout') }}" onclick="event.preventDefault();
