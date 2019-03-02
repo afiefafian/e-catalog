@@ -6,7 +6,7 @@ use App\Supplier;
 
 $factory->define(App\Produk::class, function (Faker $faker) {
     return [
-        'nama' => $faker->sentence($nbWords = 5, $variableNbWords = true),
+        'nama' => $faker->sentence($nbWords = 16, $variableNbWords = true),
         'supplier_id' => function () {
             return Supplier::inRandomOrder()->first()->id;
         },

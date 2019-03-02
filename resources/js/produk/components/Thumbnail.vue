@@ -69,7 +69,8 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     line-height: 14px;
-    max-height: 28px; 
+    max-height: 28px;
+    max-width: 97%;
   }
 
   .c_harga {

@@ -182,8 +182,8 @@
             reader.onload = function(e) {
                 $('#gambar-tag').attr('src', e.target.result);
                 resize = new Croppie($('#gambar-tag')[0], {
-                    viewport: { width: 300, height: 200 },
-                    boundary: { width: 450, height: 300 },
+                    viewport: { width: 600, height: 400 },
+                    boundary: { width: 100 + '%', height: 500 },
                     enableResize: true,
                     enableOrientation: true
                 });
